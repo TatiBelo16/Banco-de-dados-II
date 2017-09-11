@@ -1,0 +1,95 @@
+create database parcial;
+		use parcial;
+	
+		create table titulacoes(
+			id integer not null auto_increment,
+			descricao varchar(50),
+			primary key(id));
+	
+		insert into titulacoes values
+			(1,'especialização incompleta'),
+			(2,'especialização completa'),
+			(3,'mestrado incompleto'),
+			(4,'mestrado completo'),
+			(5,'doutorado incompleto'),
+			(6,'doutorado completo');
+	
+		create table professores(
+			id integer not null auto_increment,
+			matricula varchar(50),
+			nome varchar(50),
+			id_titulacoes integer,
+			endereco varchar(50),
+			cidade varchar(50),
+			email varchar(50),
+			primary key (id),
+			foreign key (id_titulacoes) references titulacoes(id));
+	
+		insert into professores values
+			(1,'32458-9','cristiano',4,'rua xv de novembro,32',2,'crfranco@fameg.edu.br'),
+			(2,'5247-9','jose',2,'rua tobias barreto,261',1,'roque@terra.com.br'),
+			(3,'12548-9','roberto',1,'hermann schullz',3,'hermann@gmail.com');
+	
+	
+		create table turmas(
+			id integer not null auto_increment,
+			descricao varchar(50),
+			semestre varchar(50),
+			num_alunos integer,
+			primary key(id));
+	
+		insert into turmas values
+			(1,'BCC','2006-2',34),
+			(2,'SIG','199-1',28),
+			(3,'LC','1998-1',20),
+			(4,'BCC','2001-1',7);
+	
+		create table disciplina(
+			id integer not null auto_increment,
+			descricao varchar(50),
+			cargahoraria integer,
+			primary key (id));
+	
+		insert into disciplina values
+			(1,'programação de banco de dados',84),
+			(2,'programação orientada a objetos',84),
+			(3,'padroes de projeto',84),
+			(4,'sistemas operacionais',84),
+			(5,'algoritmos',130),
+			(6,'matematica discreta',84),
+			(7,'teoria da computação',84),
+			(8,'estrutura de dados',84),
+			(9,'algebra booleana',84),
+			(10,'inteligência artificial',84),
+			(11,'eletrônica para computação',84),
+			(12,'robótica',84),
+			(13,'redes de computadores',84),
+			(14,'sistesmas distribuidos',84);
+	
+		create table professor_disciplina(
+			id_professor integer,
+			id_discipilina integer,
+			id_turmas integer,
+			foreign key(id_professor) references professores(id),
+			foreign key(id_discipilina) references disciplina(id),
+			foreign key(id_turmas) references turmas(id));
+	
+			insert into professor_disciplina values
+			(1,1,2),
+			(1,2,1),
+			(1,2,3),
+			(1,4,2),
+			(2,7,3),
+			(2,9,2),
+			(2,10,3),
+			(3,5,1),
+			(3,6,1);
+	
+			select professores.nome, titulacoes.descricao, turmas.descricao, disciplina.descricao, disciplina.cargahoraria  
+			from disciplina, professores, titulacoes, turmas, professor_disciplina
+			where disciplina.id = professor_disciplina.id_discipilina and 
+			professores.id = professor_disciplina.id_professor and 
+			titulacoes.id = professores.id_titulacoes and 
+			turmas.id = professor_disciplina.id_turmas 
+			order by professores.nome, turmas.descricao;
+
