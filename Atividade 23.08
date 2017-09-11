@@ -1,0 +1,8 @@
+
+
+select professores.nome, titulacoes.descricao,turmas.descricao,disciplinas.descricao, disciplinas.cargahoraria from professores,
+	titulacoes,turmas, disciplinas, professordisciplina 
+		where professores.id =  professordisciplina.idprofessor and
+	  turmas.id = professordisciplina.idTurma and disciplinas.id = professordisciplina.idDisciplina and
+    titulacoes.id = professores.idTitulacao
+		order by turmas.descricao, professores.nome;
