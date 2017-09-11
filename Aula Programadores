@@ -1,0 +1,45 @@
+create database cadastro_programadores;
+	
+	use cadastro_programadores;
+	
+	
+	create table nivel_programador(
+		id int, descicao varchar(50),
+		primary key (id));
+	
+	
+	create table setor (
+		id int, descicao varchar(50),
+		primary key (id));
+	
+	
+	create table programador(
+		id int, 
+		num_matricula int, 
+		nome varchar(50),
+		primary key (id),
+		id_nivel int, 
+		id_setor int,
+		foreign key (id_nivel) references nivel_programador(id),
+		foreign key (id_setor) references setor(id));
+	
+	
+	create table nivel_dificuldade(
+		id int, descricao int,
+		primary key (id));
+	
+	
+	create table programa(
+		id int, 
+		nome varchar(50),
+		id_dificuldade int,
+		tempo varchar(50),
+		primary key (id),
+		foreign key (id_dificuldade) references nivel_dificuldade(id));
+	
+	
+	create table projeto(
+		id_programador int, id_programa int,
+		foreign key(id_programador) references programador(id),
+		foreign key (id_programa) references programa(id));
+
