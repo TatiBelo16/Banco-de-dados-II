@@ -1,0 +1,70 @@
+create database vendedores;
+	
+		use vendedores;
+	
+	create table regiao(
+		id integer,
+		nome varchar(50),
+		primary key (id));
+	
+	
+	create table pontoestrategico(
+		id integer,
+		descricao varchar(50),
+		id_regiao integer,
+		primary key (id),
+		foreign key (id_regiao) references regiao(id));
+	
+	
+	create table vendedor(
+		id integer, 
+		nome varchar(50), 
+		id_regiao integer,
+		primary key (id),
+		foreign key (id_regiao) references regiao(id));
+	
+	create table cliente(
+		id integer,
+		nome varchar(50),
+		primary key (id));
+	
+	
+	create table veiculo(
+		id integer, 
+		nome varchar(50),
+		primary key (id));
+	
+	create table usoVeiculo(
+		id integer, 
+		data date,
+		id_regiao integer,
+		id_veiculo integer,
+		primary key (id),
+		foreign key (id_regiao) references regiao(id),
+		foreign key (id_veiculo) references veiculo(id));
+	
+	create table nf(
+		id integer, 
+		id_vendedor integer,
+		id_cliente integer,
+		primary key (id),
+		foreign key (id_vendedor) references vendedor(id),
+		foreign key (id_cliente) references cliente(id));
+	
+	create table item(
+		id integer,
+		descricao varchar(50),
+		estoque integer,
+		preco_atual double(10,2),
+		primary key (id));
+	
+	
+	create table pedido(
+		id integer,
+		id_item integer,
+		id_nf integer,
+		qtd integer,
+		primary key (id),
+		foreign key (id_item) references item(id),
+		foreign key (id_nf) references nf(id));
+
